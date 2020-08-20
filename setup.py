@@ -91,9 +91,11 @@ egg_name = pkg_name+eggext
 print("Egg name:",egg_name)
 
 #ocndataprefix=site.getsitepackages()[0]+"/"+egg_name+"/ocndata/"
-ocndataprefix=site.getsitepackages()[0]+"/pygamman/ocndata"
+#ocndataprefix = site.getsitepackages()[0]+"/pygamman/ocndata"
+setup_dir = os.path.dirname(os.path.realpath(__file__))
+ocndataprefix = os.path.join(setup_dir, "pygamman/fortrandata/") 
 shutil.copy2('pygamman/fortran/gamman_nodata.f', 'pygamman/fortran/gamman.f')
-replaceAll("pygamman/fortran/gamman.f","OCNDATAPATH",str(ocndataprefix))
+replaceAll("pygamman/fortran/gamman.f", "OCNDATAPATH", str(ocndataprefix))
 
 
 setup(name=NAME,
@@ -108,8 +110,8 @@ setup(name=NAME,
       download_url=DOWNLOAD_URL,
       license=LICENSE,
       packages=['pygamman'],
-      package_dir={'pygamman':'pygamman','pygamman/ocndata':'pygamman'},
-      data_files=[('pygamman/ocndata', ['pygamman/fortrandata/llp.fdt', 'pygamman/fortrandata/stga.fdt']), ('pygamman', [BASEPATH+'/gamman.so'])],
+      package_dir={'pygamman': 'pygamman'}, #'pygamman/ocndata':'pygamman'},
+      #data_files=[('pygamman/ocndata', ['pygamman/fortrandata/llp.fdt', 'pygamman/fortrandata/stga.fdt']), ('pygamman', [BASEPATH+'/gamman.so'])],
       ext_modules=[wrapper])
 """
       cmdclass={'build': build_genunf, 'install': install},
